@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'search_page.dart';
+import 'setting_page.dart';
+import 'feed_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,16 +26,37 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Cupertino App'),
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.news),
+            label: 'Feeds',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.settings),
+            label: 'Settings',
+          ),
+        ],
       ),
-      child: Center(
-        child: Text(
-          'Home Page',
-          style: CupertinoTheme.of(context).textTheme.navLargeTitleTextStyle,
-        ),
-      ),
+      tabBuilder: (context, index) {
+        switch (index) {
+          case 0:
+            return FeedsPage();
+          case 1:
+            return SearchPage();
+          case 2:
+            return SettingsPage();
+          default:
+            return Center(
+              child: Text('Page not found!'),
+            );
+        }
+      },
     );
   }
 }
